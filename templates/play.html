@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song Details Banner</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #222;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #sc{
+            padding: 200px;
+        }
+
+        .song-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            height: 70%;
+            margin: 20px;
+            padding: 20px;
+            background-color: #333; /* Darker background */
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.4);
+        }
+
+        .song-details {
+            text-align: left; /* Adjusted text alignment */
+            margin-right: 39px;
+        }
+
+        h2, p {
+            margin: 5px 0; /* Added spacing between elements */
+        }
+        #banner{
+            padding: 255px;
+        }
+        
+        #play-button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        #play-button:hover {
+            background-color: #45a049;
+        }
+
+        #progress-bar {
+            width: 80%;
+            height: 10px;
+            background-color: #555;
+            border-radius: 5px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        #play-progress {
+            height: 100%;
+            background-color: #4caf50;
+            border-radius: 5px;
+            width: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="song-banner">
+        <img id="banner"  src="{{song.poster.url}}" alt="Song Image" style="max-width: 200px; border-radius: 10px;">
+        <div class="song-details">
+            <h2 class="sc">SONG: {{song.title}}</h2>
+            <p class="sc">ARTIST: {{song.artist}}</p>
+            <!-- Add other song details as needed -->
+        </div>
+    </div>
+
+    <button id="play-button" onclick="playSong('{{ song.song.url }}')">Play</button>
+    <div id="progress-bar">
+        <div id="play-progress"></div>
+    </div>
+
+    <script>
+        function playSong(filePath) {
+            var audio = new Audio(filePath);
+            var progressBar = document.getElementById('play-progress');
+
+            audio.addEventListener('timeupdate', function() {
+                var progress = (audio.currentTime / audio.duration) * 100;
+                progressBar.style.width = progress + '%';
+            });
+
+            audio.play();
+        }
+    </script>
+</body>
+</html>
